@@ -1,0 +1,12 @@
+[project]
+name = "jp-command-robot"
+version = "0.1.0"
+description = "日本語命令を分類して ROS 2 / Gazebo のロボットを動かす"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+  "scikit-learn>=1.4",
+]
+
+[tool.uv]
+package = false
