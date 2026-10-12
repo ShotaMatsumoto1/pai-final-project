@@ -37,9 +37,11 @@ Physical AI 応用1講座の最終課題向け実装です。日本語の移動�
 |---|---|---|
 | forward | 前進 0.4 m/s | 2.0 秒のあと停止 |
 | backward | 後退 0.4 m/s | 2.0 秒のあと停止 |
-| left | 左旋回 0.8 rad/s | 2.0 秒のあと停止 |
-| right | 右旋回 0.8 rad/s | 2.0 秒のあと停止 |
+| left | その場で左旋回 0.8 rad/s（並進なし） | 2.0 秒のあと停止 |
+| right | その場で右旋回 0.8 rad/s（並進なし） | 2.0 秒のあと停止 |
 | stop | 速度 0 | 停止指令を送る |
+
+左右は前に進まず、その場で旋回します。
 
 公式モデルの速度上限は並進 0.5 m/s、旋回 1 rad/s です。指令値はその内側にしています。
 
@@ -115,15 +117,7 @@ uv pip install "scikit-learn>=1.4"
 ./scripts/run_robot.sh
 ```
 
-Gazebo の `diff_drive` が既に動いていて、ブリッジだけが無い場合は、ターミナル1を次に置き換えます。
-
-```bash
-./scripts/start_bridge.sh
-```
-
-`RVIZ=true ./scripts/start_gazebo.sh` で RViz も開けます。ロボットの確認には Gazebo の画面で足ります。
-
-プロンプトへ日本語を入力します。終了は `exit` です。動作中に「止まれ」と入力すると、その動作を中断します。
+`start_gazebo.sh` が Gazebo と速度指令のブリッジをまとめて起動します。プロンプトへ日本語を入力します。終了は `exit` です。動作中に「止まれ」と入力すると、その動作を中断します。
 
 分類だけを再評価する場合:
 
@@ -208,16 +202,21 @@ python -m jp_command_robot.sim_check
 - 実機では未確認である。
 - Gazebo のウィンドウを見ての確認は、この実装時には行っていない。移動の判断はオドメトリである。
 
-## 提出用の文章
+## 提出物
 
-課題レポートの原稿は `docs/report.md`、動画の撮影順は `docs/video_plan.md` にあります。PDF 化と動画撮影は、Gazebo の画面で動きを確認したあとに行います。
+- レポート PDF: `docs/report.pdf`（原稿は `docs/report.md`）
+- 動画の撮影順: `docs/video_plan.md`
+- コード: https://github.com/ShotaMatsumoto1/pai-final-project
+
+動画の撮影と OmniCampus への提出は別作業です。Gazebo の画面を見ての確認は、この文書の数値には含めていません。
 
 ## ディレクトリ
 
 ```text
-data/                 学習、校正、評価用 CSV
-jp_command_robot/     分類、ROS 2 制御、シミュレータ確認
-tests/                分類と停止処理のテスト
-scripts/              Gazebo、ブリッジ、制御プログラムの起動
-docs/                 レポート原稿と動画構成
+data/                  学習、校正、評価用 CSV
+jp_command_robot/      分類、ROS 2 制御、動作確認
+tests/                 分類と停止処理のテスト
+scripts/start_gazebo.sh
+scripts/run_robot.sh
+docs/                  レポートと動画の撮影順
 ```
